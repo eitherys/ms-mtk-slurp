@@ -9,18 +9,9 @@ import urllib
 import urllib2
 from HTMLParser import HTMLParser
 
-mtkWebsite = "http://www.multitracks.cambridge-mt.com/"
-mp3Website = "http://www.previews.cambridge-mt.com/"
-mtkFilePattern = "((?<=" + mtkWebsite + ").*Full\.zip)"
-mp3FilePattern = "((?<=" + mp3Website + ")((.*_Full_Preview\.mp3)|(.*_Remix\.mp3)))"
-
-directory = "ms-mtk-downloads/"
-print "Writing all files URL's into a file in: ", directory
-if not os.path.exists(directory):
-	os.makedirs(directory)
-file = open(directory + "/mtkDownloadList.html", "wb")
-
 class mtkDownloader(HTMLParser):
+	def __init__(self, outFile):
+		self.out = outFile
 	def handle_starttag(self, tag, attrs):
 		if tag == "a" and len(attrs) == 1:
 			attr = attrs[0]
@@ -29,14 +20,25 @@ class mtkDownloader(HTMLParser):
 				if match is not None:
 					fname = match.group(0)
 					if not os.path.isfile(fname): 
-						file.write(attr[1]+"<br>")
+						self.out.write(attr[1]+"\n")
 	def handle_endtag(self, tag):
 		return
 	def handle_data(self, data):
 		return
 
+mtkWebsite = "http://www.multitracks.cambridge-mt.com/"
+mp3Website = "http://www.previews.cambridge-mt.com/"
+mtkFilePattern = "((?<=" + mtkWebsite + ").*Full\.zip)"
+mp3FilePattern = "((?<=" + mp3Website + ")((.*_Full_Preview\.mp3)|(.*_Remix\.mp3)))"
+
+directory = "./"
+print "Writing all files URL's into a file in: ", directory
+if not os.path.exists(directory):
+	os.makedirs(directory)
+
+file = open(directory + "/mtkDownloadList.txt", "wb")
 page = urllib.urlopen("http://www.cambridge-mt.com/ms-mtk.htm")
-scanner = mtkDownloader()
+scanner = mtkDownloader(file)
 scanner.feed(page.read())
 page.close()
 file.close()

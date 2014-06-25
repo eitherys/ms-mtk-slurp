@@ -9,6 +9,11 @@ import urllib
 import urllib2
 from HTMLParser import HTMLParser
 
+mtkWebsite = "http://www.multitracks.cambridge-mt.com/"
+mp3Website = "http://www.previews.cambridge-mt.com/"
+mtkFilePattern = "((?<=" + mtkWebsite + ").*Full\.zip)"
+mp3FilePattern = "((?<=" + mp3Website + ")((.*_Full_Preview\.mp3)|(.*_Remix\.mp3)))"
+
 class mtkDownloader(HTMLParser):
 	def __init__(self, outFile):
 		self.out = outFile
@@ -25,11 +30,6 @@ class mtkDownloader(HTMLParser):
 		return
 	def handle_data(self, data):
 		return
-
-mtkWebsite = "http://www.multitracks.cambridge-mt.com/"
-mp3Website = "http://www.previews.cambridge-mt.com/"
-mtkFilePattern = "((?<=" + mtkWebsite + ").*Full\.zip)"
-mp3FilePattern = "((?<=" + mp3Website + ")((.*_Full_Preview\.mp3)|(.*_Remix\.mp3)))"
 
 directory = "./"
 print "Writing all files URL's into a file in: ", directory

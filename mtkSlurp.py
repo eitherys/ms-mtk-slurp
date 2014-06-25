@@ -11,7 +11,7 @@ from HTMLParser import HTMLParser
 
 mtkWebsite = "http://www.multitracks.cambridge-mt.com/"
 mp3Website = "http://www.previews.cambridge-mt.com/"
-mtkFilePattern = "((?<=" + mtkWebsite + ").*_*Full\.zip)"
+mtkFilePattern = "((?<=" + mtkWebsite + ").*Full\.zip)"
 mp3FilePattern = "((?<=" + mp3Website + ")((.*_Full_Preview\.mp3)|(.*_Remix\.mp3)))"
 
 directory = "ms-mtk-downloads/"

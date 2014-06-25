@@ -19,7 +19,6 @@ print "Writing all files URL's into a file in: ", directory
 if not os.path.exists(directory):
 	os.makedirs(directory)
 file = open(directory + "/mtkDownloadList.html", "wb")
-fileCount = 0
 
 class mtkDownloader(HTMLParser):
 	def handle_starttag(self, tag, attrs):
@@ -30,8 +29,7 @@ class mtkDownloader(HTMLParser):
 				if match is not None:
 					fname = match.group(0)
 					if not os.path.isfile(fname): 
-						file.write(attr[1]+"\n")
-						fileCount++
+						file.write(attr[1]+"<br>")
 	def handle_endtag(self, tag):
 		return
 	def handle_data(self, data):
